@@ -4,7 +4,6 @@ const password = serverCredentials.password;
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://"+userName+":"+password+"@cluster0.vrici.mongodb.net/Mechanical_switches?retryWrites=true&w=majority";
 
-//const uri = "mongodb+srv://MechanicalAdmin:Christmas5@cluster0.vrici.mongodb.net/Mechanical_switches?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true  });
 
 
