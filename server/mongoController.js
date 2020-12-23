@@ -8,26 +8,59 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 
 async function run(){
-    try {
-        await client.connect();
+	try {
+		// wait for connection to be established
+		await client.connect();
 
-       // const database = client.db("Mechanical_switches");
-       const query = {  };
-    const options = {
-      
-    };
+		// var holding query to execute
+		const query = {  };
+		// var holding query options 
+		const options = {
 
-        const collection = client.db("Mechanical_switches").collection("switches");
+		};
 
-        const results = await collection.findOne(query, options);
+		// get collection object 
+		const collection = client.db("Mechanical_switches").collection("switches");
+		// query collection 
+		const results = await collection.findOne(query, options);
 
-        console.log(results);
-    } finally {
-        await client.close();
-    }
+		console.log(results);
+	} finally {
+		// close connection when finished
+		await client.close();
+	}
 }
 
-run()
+/*
+  
+*/
+async function getAllSwitches(){
+	let dbResults;
+	try{
+		// wait for connection to be established
+		await client.connect();
+
+		// var holding query to execute
+		const query = {  };
+		// var holding query options 
+		const options = {
+
+		};
+
+		// get collection object 
+		const collection = client.db("Mechanical_switches").collection("switches");
+		// query collection 
+		const results = await collection.findOne(query, options);
+		dbResults = results;
+		//return (results);
+
+	} finally {
+		await client.close();
+		return dbResults
+	}
+}
+
+//run()
 
 /*
 client.connect(err => {
@@ -35,10 +68,13 @@ client.connect(err => {
   // perform actions on the collection object
   console.log("Connected")
 
-    let results = collection.find({}, {})
-    //console.log(results);
+	let results = collection.find({}, {})
+	//console.log(results);
 
   client.close();
 });
 
 */
+
+
+module.exports.getAllSwitches = getAllSwitches;
