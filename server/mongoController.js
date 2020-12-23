@@ -2,6 +2,7 @@ const serverCredentials = require("./serverCredentials.json")
 const userName = serverCredentials.userName;
 const password = serverCredentials.password;
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 const uri = "mongodb+srv://"+userName+":"+password+"@cluster0.vrici.mongodb.net/Mechanical_switches?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true  });
@@ -50,7 +51,7 @@ async function getAllSwitches(){
 		// get collection object 
 		const collection = client.db("Mechanical_switches").collection("switches");
 		// query collection 
-		const results = await collection.findOne(query, options);
+		const results = await collection.find({}).toArray();
 		dbResults = results;
 		//return (results);
 
@@ -60,21 +61,36 @@ async function getAllSwitches(){
 	}
 }
 
+async function getSwitchId(idVal){
+	let dbResults;
+	try{
+		// wait for connection to be established
+		await client.connect();
+
+		let objId = new ObjectId(idVal);
+
+		// var holding query to execute
+		const query = { _id: objId };
+		// var holding query options 
+		const options = {
+
+		};
+
+		// get collection object 
+		const collection = client.db("Mechanical_switches").collection("switches");
+		// query collection 
+		const results = await collection.findOne(query, options);
+		dbResults = results;
+
+	} finally {
+		client.close();
+		return dbResults;
+	}
+}
+
 //run()
 
-/*
-client.connect(err => {
-  const collection = client.db("Mechanical_switches").collection("switches");
-  // perform actions on the collection object
-  console.log("Connected")
-
-	let results = collection.find({}, {})
-	//console.log(results);
-
-  client.close();
-});
-
-*/
 
 
 module.exports.getAllSwitches = getAllSwitches;
+module.exports.getSwitchId = getSwitchId;
