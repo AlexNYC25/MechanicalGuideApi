@@ -4,11 +4,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var mongoose = require('mongoose');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var switchRouter = require('./routes/switches');
 
 var app = express();
+
+// server credentials 
+const serverCredentials = require("./database/serverCredentials.json")
+const userName = serverCredentials.userName;
+const password = serverCredentials.password;
+
+const URL = "mongodb+srv://"+userName+":"+password+"@cluster0.vrici.mongodb.net/Mechanical_switches?retryWrites=true&w=majority";
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,6 +28,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// connect to database
+mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then((result) => {
+    console.log("connected to database");
+  })
+  .catch((err) => {
+    console.log("There was some sort of error in connecting to the database");
+  })
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
