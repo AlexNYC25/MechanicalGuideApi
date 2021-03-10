@@ -24,21 +24,43 @@ router.get('/', function(req, res, next) {
 /*
     GET route for getting specific data for a specific switch from database
 */
-router.get('/:id', function(req, res, next){
-    let objectId = new ObjectId(req.params.id);
-    /*
-    database.getSwitchId(req.params.id).then((results) => {
-        res.send(results);
-    })
-    */
-    switches.find({_id: objectId})
+router.get('/id/:id', function(req, res, next){
+    
+    let objectId = (req.params.id);
+    
+    if (objectId.length !== 24){
+        res.send(
+            {
+                message:"Passed Switch ID is not the correct length",
+                code: 500
+            }
+        )
+        return;
+    }
+
+    switches.find({_id: new ObjectId(objectId)})
         .then((results) => {
-            res.send(results);
+            let myResults = {}
+            myResults.switchData = results
+
+            if(results.length === 0){
+                myResults.message = "There is no Switch data for this id " + req.params.id;
+                myResults.code = 404
+            }
+            else {
+                myResults.message = 'Switch data for ' + req.params.id;
+                myResults.code = 200
+            }
+            
+            res.send(myResults);
         })
-        .catch((error) => {
+        .catch((error) => { 
             console.log(error);
+            res.send({
+                message: "Some error occurred when querying database",
+                code: 500
+            })
         })
-    //res.send();
 })
 
 /*
