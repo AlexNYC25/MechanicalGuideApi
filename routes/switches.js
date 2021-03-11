@@ -15,9 +15,18 @@ router.get('/', function(req, res, next) {
     switches.find()
         .then((results) => {
             res.send(results);
+            res.send({
+                switchData: results,
+                message: "All Switch data",
+                code: 200
+            })
         })
         .catch((error) => {
             console.log(error);
+            res.send({
+                message: "There was an error in querying the database",
+                code: 503
+            })
         })
 })
 
@@ -32,7 +41,7 @@ router.get('/id/:id', function(req, res, next){
         res.send(
             {
                 message:"Passed Switch ID is not the correct length",
-                code: 500
+                code: 400
             }
         )
         return;
@@ -58,10 +67,12 @@ router.get('/id/:id', function(req, res, next){
             console.log(error);
             res.send({
                 message: "Some error occurred when querying database",
-                code: 500
+                code: 503
             })
         })
 })
+
+
 
 /*
     DELETE route for deleting switch from database
