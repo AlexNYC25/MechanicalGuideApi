@@ -72,6 +72,17 @@ router.get('/id/:id', function(req, res, next){
         })
 })
 
+router.get("/type/:type", function(req, res, next){
+    let type = (req.params.type);
+
+    switches.find({type: type})
+        .then((results) => {
+            res.send(results)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+})
 
 
 /*
