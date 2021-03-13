@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
 
     switches.find()
         .then((results) => {
-            res.send(results);
             res.send({
                 switchData: results,
                 message: "All Switch data",
@@ -47,29 +46,29 @@ router.get('/id/:id', function(req, res, next){
         return;
     }
 
-    switches.find({_id: new ObjectId(objectId)})
-        .then((results) => {
-            let myResults = {}
-            myResults.switchData = results
+   switches.findById(new ObjectId(objectId))
+    .then((results) => {
+        let myResults = {}
+        myResults.switchData = results
 
-            if(results.length === 0){
-                myResults.message = "There is no Switch data for this id " + req.params.id;
-                myResults.code = 404
-            }
-            else {
-                myResults.message = 'Switch data for ' + req.params.id;
-                myResults.code = 200
-            }
-            
-            res.send(myResults);
+        if(results.length === 0){
+            myResults.message = "There is no Switch data for this id " + req.params.id;
+            myResults.code = 404
+        }
+        else {
+            myResults.message = 'Switch data for ' + req.params.id;
+            myResults.code = 200
+        }
+        
+        res.send(myResults);
+    })
+    .catch((error) => { 
+        console.log(error);
+        res.send({
+            message: "Some error occurred when querying database",
+            code: 503
         })
-        .catch((error) => { 
-            console.log(error);
-            res.send({
-                message: "Some error occurred when querying database",
-                code: 503
-            })
-        })
+    })
 })
 
 router.get("/type/:type", function(req, res, next){
@@ -77,11 +76,56 @@ router.get("/type/:type", function(req, res, next){
 
     switches.find({type: type})
         .then((results) => {
-            res.send(results)
+            let returnResults = {};
+            returnResults.switchData = results;
+
+            if(results.length === 0){
+                returnResults.message = 'No Switch data for Type: ' + req.params.type;
+                returnResults.code = 404;
+            }
+            else {
+                returnResults.message = 'Switch data for Type: ' + req.params.type;
+                returnResults.code = 200;
+            }
+
+            res.send(returnResults)
         })
         .catch((error) => {
             console.log(error)
+            res.send({
+                message: "Some error occurred when querying database",
+                code: 503
+            })
         })
+})
+
+router.get("/search/:searchQuery", function(req,res,next) {
+    searchQuery = decodeURIComponent( req.params.searchQuery.replace(/\+/g, '%20') );
+
+    switches.find({$text: {$search: searchQuery}})
+        .then((results) => {
+            let returnResults = {}
+            returnResults.switchData = results;
+
+            if(results.length === 0){
+                returnResults.message = 'No Search Results for: ' + searchQuery;
+                returnResults.code = 404;
+            }
+            else {
+                returnResults.message = 'Search Results for ' + searchQuery;
+                returnResults.code = 200;
+            }
+
+            res.send(returnResults)
+        })
+        .catch((error) => {
+            console.log(error)
+            res.send({
+                message: "Some error occurred when querying database",
+                code: 503
+            })
+        })
+    
 })
 
 
