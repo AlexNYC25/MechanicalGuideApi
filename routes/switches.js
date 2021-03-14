@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-//var database = require('../server/mongoController');
-
+// switch model
 let switches = require('../database/models/switches');
-
+// Object id class for mongodb
 const ObjectId = require('mongodb').ObjectID;
 
 /*
@@ -99,6 +98,9 @@ router.get("/type/:type", function(req, res, next){
         })
 })
 
+/*
+    GET route for searching switch collection for using search query string
+*/
 router.get("/search/:searchQuery", function(req,res,next) {
     searchQuery = decodeURIComponent( req.params.searchQuery.replace(/\+/g, '%20') );
 
@@ -132,7 +134,9 @@ router.get("/search/:searchQuery", function(req,res,next) {
 /*
     DELETE route for deleting switch from database
 */
-router.delete('/switches/:id', function(req, res, next){
+router.delete('/removeSwitches/:id', function(req, res, next){
+    // placeholder text
+    res.send(req.header("AuthorizationUserName") + " " + req.header("AuthorizationPassword"))
 
 })
 
