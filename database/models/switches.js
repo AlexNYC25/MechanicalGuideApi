@@ -9,6 +9,13 @@ var schema = new mongoose.Schema({
     type: {
         type: String,
         default: ''
+    },
+    manufacturer: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: Array
     }
 });
 
