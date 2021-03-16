@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
     },
     type: {
         type: String,
-        default: ''
+        required: true
     },
     manufacturer: {
         type: String,
@@ -16,6 +16,33 @@ var schema = new mongoose.Schema({
     },
     category: {
         type: Array
+    },
+    avgCost: {
+        type: Number
+    },
+    actuactionForce: {
+        type: Number
+    },
+    bottomForce: {
+        type: Number
+    },
+    springWeight: {
+        type: Array
+    },
+    actuationDistance: {
+        type: Number
+    },
+    travelDistance: {
+        type: Number
+    },
+    mainImage: {
+        type: String
+    },
+    images: {
+        type: Array
+    },
+    manufacturerDesctiption: {
+        type: String
     }
 });
 
