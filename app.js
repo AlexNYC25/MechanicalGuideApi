@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var dotenv = require('dotenv');
 var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
@@ -12,10 +12,12 @@ var switchRouter = require('./routes/switches');
 
 var app = express();
 
+dotenv.config();
+
 // server credentials 
-const serverCredentials = require("./database/serverCredentials.json")
-const userName = serverCredentials.userName;
-const password = serverCredentials.password;
+//const serverCredentials = require("./database/serverCredentials.json")
+const userName = process.env.MONGO_USERNAME;
+const password = process.env.MONGO_PASSWORD;
 
 const URL = "mongodb+srv://"+userName+":"+password+"@cluster0.vrici.mongodb.net/Mechanical_switches?retryWrites=true&w=majority";
 
