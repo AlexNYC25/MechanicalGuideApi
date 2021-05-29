@@ -131,24 +131,4 @@ router.get("/search/:searchQuery", function(req,res,next) {
 })
 
 
-/*
-    DELETE route for deleting switch from database
-*/
-router.delete('/removeSwitches/:id', function(req, res, next){
-    // placeholder text
-    res.send(req.header("AuthorizationUserName") + " " + req.header("AuthorizationPassword"))
-
-})
-
-/*
-    POST route for passing modifications to a specific switch object in the database
-*/
-router.post('/switches/:id', function(req, res, next){
-
-})
-
-
-
-
-
 module.exports = router;
