@@ -15,21 +15,71 @@
                         <th>HTTP Method</th>
                         <td>GET</td>
                     </tr>
+                    <tr>
+                        <th>Endpoint</th>
+                        <td>[URL]/switch/</td>
+                    </tr>
                     
                  </tbody>
             </table>
         </div>
+        <p class="mt-4 h3">Return JSON object:</p>
+            
+            <code>
+                {<br />
+                switchData: <samp>[Array of switch objects]</samp>,<br />
+                message: <samp>[Relevent message about query]</samp>,<br />
+                code: <samp>[HTTP query code relevent to the specific query]</samp><br />
+                }          
+            </code> 
             
     </div>
 
-    <div><p class="h3">Return JSON object:676</p></div>
-    <pre>
-        <code>
-            {
-            &#9;switchData: <samp>[Array of switch objects]</samp>,
-            &#9;message: <samp>[Relevent message about query]</samp>,
-            &#9;code: <samp>[HTTP query code relevent to the specific query]</samp>
-            }          
-        </code> 
-    </pre>
+    <div class="my-4">
+        <p class="h2">
+            Get the data for a specific switch using its id 
+        </p>
+        <div><p class="h3">Technical Details:</p></div>
+        <div class="my-4">
+            <table class="table">
+                 <tbody>
+                    <tr>
+                        <th>HTTP Method</th>
+                        <td>GET</td>
+                    </tr>
+                    <tr>
+                        <th>Endpoint</th>
+                        <td>[URL]/switch/id/{id}</td>
+                    </tr>
+                    
+                 </tbody>
+            </table>
+        </div>
+        <p class="mt-4 h3">Return JSON object:</p>
+            
+            <code>
+                {<br />
+                switchData: {<br />
+                    category: [Array of categories relevent to the switch],<br />
+                    springWeight: [Array of spring weights the switch may have],<br />
+                    images: [Array of urls of images for the switch], <br />
+                    _id: [String id for the switch in the database],<br />
+                    name: [String name for the switch in the database],<br />
+                    manufacturer: [String name for the name of the manufacturer of the switch], <br />
+                    type: [String of what type of string is the mechanical switch classified as.],<br />
+                    avg_cost: [double of what the average cost was of the switch based on prices on vendor sites],<br />
+                    actuactionForce: [integer of what force is needed to reach the switchs' actuation force],<br />
+                    bottomForce: [integer of what force is needed to reach the bottom of the switch's housing], <br />
+                    actuationDistance: [integer of how far in terms of mm of how far the stem of a switch has to travel downward to reach the actuation distance],<br />
+                    travelDistance: [integer of how far in terms of mm of how far the stem of a switch can travel downward until it reaches the bottom of the housing], <br />
+                    mainImage: [url of an image that is the most representative of the switch, may be in images array], <br />
+                    manufacturerDesctiption: [The description given by the manufacturer or designer about the switch], <br />
+                },<br />
+                message: <samp>[Relevent message about query]</samp>,<br />
+                code: <samp>[HTTP query code relevent to the specific query]</samp><br />
+                }          
+            </code> 
+            
+    </div>
+    
 </div>
