@@ -5,10 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv');
 var mongoose = require('mongoose');
+var exphbs = require('express-handlebars');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var switchRouter = require('./routes/switches');
+var documentationRouter = require('./routes/documentation');
 
 var app = express();
 
@@ -22,8 +24,13 @@ const password = process.env.MONGO_PASSWORD;
 const URL = "mongodb+srv://"+userName+":"+password+"@cluster0.vrici.mongodb.net/Mechanical_switches?retryWrites=true&w=majority";
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
+app.engine('hbs', exphbs({
+  extname: '.hbs', layoutsDir: __dirname + '/views/layouts'
+}));
+
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -40,10 +47,14 @@ mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology: true})
     console.log("There was some sort of error in connecting to the database");
   })
 
-app.use('/', indexRouter);
+
+
 app.use('/users', usersRouter);
 app.use('/switches', switchRouter);
+app.use('/documentation', documentationRouter);
+app.use('/', indexRouter);
 
+/*
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -56,8 +67,15 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
+  /*
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', { 
+    post: {number: 25}
+  });
+  
+  res.send("in error handler")
+  
 });
+*/
 
 module.exports = app;
