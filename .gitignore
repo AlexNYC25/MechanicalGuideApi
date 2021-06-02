@@ -117,3 +117,7 @@ dist
 
 # Server credentials json file
 serverCredentials.json
+
+#scripts for admin used
+admins.js
+admin.js
