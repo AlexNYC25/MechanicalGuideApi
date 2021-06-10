@@ -45,8 +45,7 @@ mongoose.connect(URL, {useNewUrlParser: true, useUnifiedTopology: true})
   })
   .catch((err) => {
     console.log("There was some sort of error in connecting to the database");
-  })
-
+  });
 
 
 app.use('/users', usersRouter);
