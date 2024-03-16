@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 
-/* GET home page. */
+// get the index page for the API documentation
 router.get('/', function(req, res, next) {
   res.render('mainIntro', {layout: 'main'})
 });
